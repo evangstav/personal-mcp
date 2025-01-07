@@ -1,0 +1,39 @@
+{
+    "name": "personal-mcp",
+    "version": "0.1.0",
+    "description": "Personal MCP server for health and well-being tracking",
+    "command": "personal-mcp",
+    "args": [],
+    "env": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    },
+    "capabilities": {
+        "tools": {
+            "listChanged": true
+        },
+        "resources": {
+            "listChanged": true,
+            "subscribe": true
+        },
+        "prompts": {
+            "listChanged": true
+        },
+        "logging": {
+            "level": "info"
+        }
+    },
+    "development": {
+        "command": "personal-mcp",
+        "args": ["--dev"],
+        "dependencies": [
+            "pandas",
+            "pydantic",
+            "rich"
+        ],
+        "editable": true
+    },
+    "inspector": {
+        "command": "personal-mcp",
+        "args": ["--inspect"]
+    }
+}
