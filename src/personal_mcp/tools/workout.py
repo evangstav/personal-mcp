@@ -1,7 +1,8 @@
-from typing import Dict, Optional
-from datetime import datetime
 import json
+from typing import Optional
+
 from ..models import Workout
+
 
 def register_workout_tools(mcp, db):
     """Register workout-related tools."""

@@ -1,6 +1,6 @@
 import sqlite3
-from pathlib import Path
 from contextlib import contextmanager
+from pathlib import Path
 from typing import Generator
 
 
@@ -23,9 +23,10 @@ class Database:
         """Initialize the database schema with foreign key support."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            
+
             # Workouts table - track workout sessions
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS workouts (
                     id INTEGER PRIMARY KEY,
                     date TEXT NOT NULL,
@@ -34,10 +35,12 @@ class Database:
                     notes TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Exercises table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS exercises (
                     id INTEGER PRIMARY KEY,
                     workout_id INTEGER,
@@ -45,10 +48,12 @@ class Database:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (workout_id) REFERENCES workouts (id) ON DELETE CASCADE
                 )
-            """)
+            """
+            )
 
             # Sets table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS sets (
                     id INTEGER PRIMARY KEY,
                     exercise_id INTEGER,
@@ -59,10 +64,12 @@ class Database:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (exercise_id) REFERENCES exercises (id) ON DELETE CASCADE
                 )
-            """)
+            """
+            )
 
             # Meals table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS meals (
                     id INTEGER PRIMARY KEY,
                     date TEXT NOT NULL,
@@ -75,10 +82,12 @@ class Database:
                     notes TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Foods table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS foods (
                     id INTEGER PRIMARY KEY,
                     meal_id INTEGER,
@@ -90,10 +99,12 @@ class Database:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (meal_id) REFERENCES meals (id) ON DELETE CASCADE
                 )
-            """)
+            """
+            )
 
             # Journal entries table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS journal_entries (
                     id INTEGER PRIMARY KEY,
                     date TEXT NOT NULL,
@@ -105,18 +116,22 @@ class Database:
                     stress_level INTEGER CHECK (stress_level BETWEEN 1 AND 10),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """)
+            """
+            )
 
             # Tags table
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS tags (
                     id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL UNIQUE
                 )
-            """)
+            """
+            )
 
             # Journal entry tags mapping
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS entry_tags (
                     entry_id INTEGER,
                     tag_id INTEGER,
@@ -124,6 +139,7 @@ class Database:
                     FOREIGN KEY (entry_id) REFERENCES journal_entries (id) ON DELETE CASCADE,
                     FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE
                 )
-            """)
-            
+            """
+            )
+
             conn.commit()

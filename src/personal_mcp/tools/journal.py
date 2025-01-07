@@ -1,11 +1,14 @@
-from typing import Dict, Optional, List
 import json
+from typing import List, Optional
+
 import pandas as pd
+
 from ..models import JournalEntry
+
 
 def register_journal_tools(mcp, db):
     """Register journal-related tools."""
-    
+
     @mcp.tool(description="Log a journal entry")
     def log_journal_entry(entry: JournalEntry) -> str:
         """Add a journal entry with metadata."""
@@ -15,7 +18,7 @@ def register_journal_tools(mcp, db):
             # Create journal entry
             cursor.execute(
                 """
-                INSERT INTO journal_entries 
+                INSERT INTO journal_entries
                 (date, entry_type, content, mood, energy, sleep_quality, stress_level)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
@@ -105,13 +108,13 @@ def register_journal_tools(mcp, db):
                 },
                 "trends": {
                     "mood_trend": "improving" if df["mood"].is_monotonic_increasing else "varying",
-                    "energy_trend": "improving"
-                    if df["energy"].is_monotonic_increasing
-                    else "varying",
+                    "energy_trend": (
+                        "improving" if df["energy"].is_monotonic_increasing else "varying"
+                    ),
                 },
-                "common_tags": df["tags"].value_counts().head(5).to_dict()
-                if not df["tags"].empty
-                else {},
+                "common_tags": (
+                    df["tags"].value_counts().head(5).to_dict() if not df["tags"].empty else {}
+                ),
             }
 
             return json.dumps(metrics)

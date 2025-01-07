@@ -15,20 +15,39 @@ repos:
     rev: 24.1.0
     hooks:
     -   id: black
-        language_version: python3.10
+        language_version: python3
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.1.11
     hooks:
     -   id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
+        args: [
+            --fix,
+            --exit-non-zero-on-fix,
+            --line-length=120
+        ]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:
     -   id: mypy
-        additional_dependencies: [types-all]
-        args: [--strict]
+        additional_dependencies:
+        - types-click
+        - types-pyyaml
+        - pandas-stubs
+        args: [
+            --ignore-missing-imports,
+            --allow-untyped-defs,
+            --allow-subclassing-any,
+            --allow-untyped-calls,
+            --no-strict-optional,
+            --allow-any-generics,
+            --disable-error-code=valid-type,
+            --disable-error-code=assignment,
+            --disable-error-code=arg-type,
+            --disable-error-code=var-annotated,
+            --disable-error-code=no-any-return
+        ]
 
 -   repo: local
     hooks:

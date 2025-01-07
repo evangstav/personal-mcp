@@ -1,7 +1,9 @@
-from typing import Dict, Optional
-from datetime import datetime
 import json
+from datetime import datetime
+from typing import Optional
+
 from ..models import Meal
+
 
 def register_nutrition_tools(mcp, db):
     """Register nutrition-related tools."""
@@ -88,9 +90,9 @@ def register_nutrition_tools(mcp, db):
                 },
                 "metrics": {
                     "average_hunger": round(avg_hunger, 1) if avg_hunger else None,
-                    "average_satisfaction": round(avg_satisfaction, 1)
-                    if avg_satisfaction
-                    else None,
+                    "average_satisfaction": (
+                        round(avg_satisfaction, 1) if avg_satisfaction else None
+                    ),
                 },
             }
 
