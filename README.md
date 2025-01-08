@@ -1,5 +1,7 @@
 # Personal MCP Server
 
+[![smithery badge](https://smithery.ai/badge/personal-mcp)](https://smithery.ai/server/personal-mcp)
+
 A Model Context Protocol server for personal health and well-being tracking. This server provides tools and resources for tracking workouts, nutrition, and daily journal entries, with AI-assisted analysis through Claude integration.
 
 ## Features
@@ -29,6 +31,14 @@ A Model Context Protocol server for personal health and well-being tracking. Thi
 - Pattern recognition in mood and energy levels
 
 ## Installation
+
+### Installing via Smithery
+
+To install Personal Health Tracker for Claude Desktop automatically via [Smithery](https://smithery.ai/server/personal-mcp):
+
+```bash
+npx -y @smithery/cli install personal-mcp --client claude
+```
 
 ### Prerequisites
 - Python 3.10 or higher
